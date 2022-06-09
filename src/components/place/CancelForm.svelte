@@ -3,6 +3,7 @@
 <script>
     import { onMount } from "svelte";
     import ConfirmModal from "../public/ConfirmModal.svelte";
+    import PlaceList from "./PlaceList.svelte";
 
     let myPlaces = [];
 
@@ -13,9 +14,9 @@
 
     let delModal = false;
 
-    let delConfirm = (id, name) => {
-        delObject.preid = id;
-        delObject.placename = name;
+    let delConfirm = (obj) => {
+        delObject.preid = obj.preid;
+        delObject.placename = obj.placename;
         delModal = true;
     };
 
@@ -31,19 +32,7 @@
             .then((res) => {
                 myPlaces = [...myPlaces, ...res];
             });
-       
     });
-
-    const toDate = (d) => {
-        let t = new Date(parseInt(d.replace("/Date(", "").replace(")/", "")));
-        return `${t.getFullYear().toString().padStart(2, "0")}/${t
-            .getMonth()
-            .toString()
-            .padStart(2, "0")}/${t.getDate().toString().padStart(2, "0")} ${t
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${t.getMinutes().toString().padStart(2, "0")}`;
-    };
 </script>
 
 <confirm-modal
@@ -53,45 +42,12 @@
     on:confirm={() => {
         delModal = false;
     }}
-    on:cancel={()=>{delModal=false}}
+    on:cancel={() => {
+        delModal = false;
+    }}
 />
 
-<table class="table is-striped is-hoverable">
-    <thead>
-        <th />
-        <th>編號</th>
-        <th>場地名稱</th>
-        <th>借用事由/日期</th>        
-    </thead>
-    <tbody>
-        {#each myPlaces as p}
-            <tr>
-                <td>
-                    <button
-                        class="button is-danger is-light"
-                        on:click={delConfirm(p.Preid, p.Placename)}
-                        >移除借用</button
-                    >
-                </td>
-                <td>
-                    {p.Preid}
-                </td>
-                <td>
-                    {p.Placename}
-                </td>
-                <td>
-                    <p>
-                        {p.reason}
-                    </p>
-                    <div>
-                        {toDate(p.start_date)} ~ {toDate(p.end_date)}
-                    </div>
-                    
-                </td>              
-            </tr>
-        {/each}
-    </tbody>
-</table>
+<place-list places={myPlaces} on:del={delConfirm} />
 
 <style>
     @import "../../javascript/bundle.css";
