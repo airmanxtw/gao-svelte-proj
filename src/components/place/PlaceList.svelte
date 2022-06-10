@@ -20,45 +20,50 @@
     let del = (preid, placename) => {
         component.dispatchEvent &&
             component.dispatchEvent(
-                new CustomEvent("del", { preid, placename })
+                new CustomEvent("del", { detail: { preid, placename } })
             );
     };
 </script>
 
-<table class="table is-striped is-hoverable">
-    <thead>
-        <th />
-        <th>編號</th>
-        <th>場地名稱</th>
-        <th>借用事由/日期</th>
-    </thead>
-    <tbody>
-        {#each places as p}
-            <tr>
-                <td>
-                    <button
-                        class="button is-danger is-light"
-                        on:click={del(p.Preid, p.Placename)}>移除借用</button
-                    >
-                </td>
-                <td>
-                    {p.Preid}
-                </td>
-                <td>
-                    {p.Placename}
-                </td>
-                <td>
-                    <p>
-                        {p.reason}
-                    </p>
-                    <div>
-                        {toDate(p.start_date)} ~ {toDate(p.end_date)}
-                    </div>
-                </td>
-            </tr>
-        {/each}
-    </tbody>
-</table>
+{#if places.length > 0}
+    <table class="table is-striped is-hoverable">
+        <thead>
+            <th />
+            <th>編號</th>
+            <th>場地名稱</th>
+            <th>借用事由/日期</th>
+        </thead>
+        <tbody>
+            {#each places as p}
+                <tr>
+                    <td>
+                        <button
+                            class="button is-danger is-light"
+                            on:click={del(p.Preid, p.Placename)}
+                            >移除借用</button
+                        >
+                    </td>
+                    <td>
+                        {p.Preid}
+                    </td>
+                    <td>
+                        {p.Placename}
+                    </td>
+                    <td>
+                        <p>
+                            {p.reason}
+                        </p>
+                        <div>
+                            {toDate(p.start_date)} ~ {toDate(p.end_date)}
+                        </div>
+                    </td>
+                </tr>
+            {/each}
+        </tbody>
+    </table>
+{:else}
+    <div class="box is-size-3">無借用場地資料</div>
+{/if}
 
 <style>
     @import "../../javascript/bundle.css";
