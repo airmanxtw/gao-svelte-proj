@@ -17,7 +17,14 @@
 
 <body>
 	<h1>test</h1>
-	<demo-test1></demo-test1>
+	<div id="demotest"></div>
+	<script>
+		document.addEventListener("DOMContentLoaded", function (event) {
+			new DemoTest1({
+				target: document.getElementById("demotest"),
+			});
+		});
+	</script>
 </body>
 
 </html>

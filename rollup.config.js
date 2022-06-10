@@ -28,7 +28,7 @@ function serve() {
 	};
 }
 
-export default [{
+export default {
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
@@ -75,27 +75,4 @@ export default [{
 	watch: {
 		clearScreen: false
 	}
-},
-// production widget
-{
-	input: 'src/components/demo/DemoTest1.svelte',
-	output: {
-		sourcemap: true,
-		format: 'iife',
-		name: 'app',
-		file: './public/build/demo-test1.min.js'
-	},
-	plugins: [
-		svelte({
-			dev: false,
-			customElement: true
-		}),
-		resolve({
-			browser: true,
-			dedupe: ['svelte']
-		}),
-		commonjs(),
-		terser()
-	]
 }
-]
