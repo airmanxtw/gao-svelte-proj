@@ -28,20 +28,21 @@ function serve() {
 	};
 }
 
-export default {
+export default [{
 	input: 'src/main.js',
 	output: {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'C:/Users/airmanx/Documents/Visual Studio 2010/WebSites/GAO/JavaScript/bundle.js'
+		file: './public/build/bundle.js'
+		//file: 'C:/Users/airmanx/Documents/Visual Studio 2010/WebSites/GAO/JavaScript/bundle.js'
 	},
 	plugins: [
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production,
-				customElement:true,
+				customElement: true,
 			}
 		}),
 		// we'll extract any component CSS out into
@@ -74,4 +75,27 @@ export default {
 	watch: {
 		clearScreen: false
 	}
-};
+},
+// production widget
+{
+	input: 'src/components/demo/DemoTest1.svelte',
+	output: {
+		sourcemap: true,
+		format: 'iife',
+		name: 'app',
+		file: './public/build/demo-test1.min.js'
+	},
+	plugins: [
+		svelte({
+			dev: false,
+			customElement: true
+		}),
+		resolve({
+			browser: true,
+			dedupe: ['svelte']
+		}),
+		commonjs(),
+		terser()
+	]
+}
+]
