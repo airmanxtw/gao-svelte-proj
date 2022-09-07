@@ -4,16 +4,20 @@
     import { get_current_component } from "svelte/internal";
     export let places = [];
 
-    const toDate = (d) => {
+    // const toDate = (d) => {
+    //     let t = new Date(parseInt(d.replace("/Date(", "").replace(")/", "")));
+    //     return `${t.getFullYear().toString().padStart(2, "0")}/${t
+    //         .getMonth()
+    //         .toString()
+    //         .padStart(2, "0")}/${t.getDate().toString().padStart(2, "0")} ${t
+    //         .getHours()
+    //         .toString()
+    //         .padStart(2, "0")}:${t.getMinutes().toString().padStart(2, "0")}`;
+    // };
+    const toDate=(d)=>{
         let t = new Date(parseInt(d.replace("/Date(", "").replace(")/", "")));
-        return `${t.getFullYear().toString().padStart(2, "0")}/${t
-            .getMonth()
-            .toString()
-            .padStart(2, "0")}/${t.getDate().toString().padStart(2, "0")} ${t
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${t.getMinutes().toString().padStart(2, "0")}`;
-    };
+        return `${t.toLocaleDateString('zh-TW')} ${t.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false})}`;
+    }
 
     const component = get_current_component();
 
