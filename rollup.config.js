@@ -34,14 +34,15 @@ export default {
 		sourcemap: true,
 		format: 'iife',
 		name: 'app',
-		file: 'C:/Users/airmanx/Documents/Visual Studio 2010/WebSites/GAO/JavaScript/bundle.js'
+		file: './public/build/bundle.js'
+		//file: 'C:/Users/airmanx/Documents/Visual Studio 2010/WebSites/GAO/JavaScript/bundle.js'
 	},
 	plugins: [
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
 				dev: !production,
-				customElement:true,
+				customElement: true,
 			}
 		}),
 		// we'll extract any component CSS out into
@@ -74,4 +75,4 @@ export default {
 	watch: {
 		clearScreen: false
 	}
-};
+}
